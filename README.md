@@ -1,4 +1,7 @@
 # Automatic-Crater-and-Boulder-Detection-OHRC-ISRO
+
+## Kriti Khare, Soujatya Sarkar
+
 Develop an AI/ML model to detect craters/boulders of all shapes and sizes from the given OHRC data and attach relevant information to the detected craters, preferably in the form of a shape file containing the boundary of the craters/boulders.
 
 Objectives
