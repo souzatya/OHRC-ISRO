@@ -59,8 +59,8 @@ def split_data(image_files, mask_files, output_folder, train_ratio=0.8, val_rati
     copy_files([f.replace(image_folder, mask_folder) for f in test_image_files], mask_folder, os.path.join(output_folder, 'test', 'masks'))
 
 # Configuration
-image_folder = 'data/images'
-mask_folder = 'data/masks'
+image_folder = 'data_processed/images'
+mask_folder = 'data_processed/masks'
 output_folder = 'dataset'
 expected_width = 1200
 
