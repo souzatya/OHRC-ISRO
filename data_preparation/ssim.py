@@ -8,8 +8,8 @@ def compute_mse(image1, image2):
     return np.mean((image1 - image2) ** 2)
 
 # Load two images in grayscale
-image1 = cv2.imread('data/images/calibrated/20190906/ch2_ohr_ncp_20190906T1246532096_b_brw_d18.png', cv2.IMREAD_GRAYSCALE)
-image2 = cv2.imread('data/images/raw/20190906/ch2_ohr_nrp_20190906T1246532096_b_brw_d18.png', cv2.IMREAD_GRAYSCALE)
+image1 = cv2.imread('../data/images/calibrated/20190906/ch2_ohr_ncp_20190906T1246532096_b_brw_d18.png', cv2.IMREAD_GRAYSCALE)
+image2 = cv2.imread('../data/images/raw/20190906/ch2_ohr_nrp_20190906T1246532096_b_brw_d18.png', cv2.IMREAD_GRAYSCALE)
 
 # Compute SSIM index and SSIM map
 ssim_index, ssim_map = ssim(image1, image2, full=True)

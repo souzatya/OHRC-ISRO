@@ -6,7 +6,7 @@ def create_squares_from_images(input_folder, output_folder):
     for root, _, files in os.walk(input_folder):
         for filename in files:
             # Check if the file is an image
-            if filename.endswith(('.pn )):
+            if filename.endswith(('.png' )):
                 # Construct the full input path
                 img_path = os.path.join(root, filename)
                 
@@ -42,6 +42,6 @@ def create_squares_from_images(input_folder, output_folder):
                         print(f"Saved square image: {output_path}")
 
 # Example usage
-input_folder = 'data/images'
-output_folder = 'images'
+input_folder = '../data/images'
+output_folder = '../dataset/images'
 create_squares_from_images(input_folder, output_folder)
