@@ -61,7 +61,7 @@ def process_dataset(input_folder, output_folder):
                 if not os.path.exists(output_dir):
                     os.makedirs(output_dir)
                 
-                mask = create_edge_mask(input_path)
+                mask = create_mask(input_path)
                 if mask is not None:
                     cv2.imwrite(output_path, mask)
                     print(f"Saved edge mask for {input_path} to {output_path}")
