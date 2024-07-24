@@ -42,7 +42,7 @@ class OHRCDataset(Dataset):
 
 # Define transformations
 transform = transforms.Compose([
-    transforms.Resize((1200, 9014)),  # Resize the images to a fixed size
+    transforms.Resize((1200, 1200)),  # Resize the images to a fixed size
     transforms.ToTensor()          # Convert the image to a tensor
 ])
 
