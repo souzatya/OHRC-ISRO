@@ -34,8 +34,8 @@ def train_model(model, train_loader, val_loader, num_epochs=1, learning_rate=1e-
     # Loss functions and optimizer
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
-    if not os.path.exists('val_results'):
-        os.makedirs('val_results')
+    if not os.path.exists('weights'):
+        os.makedirs('weights')
    
     model.train()
 
