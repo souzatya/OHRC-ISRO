@@ -1,29 +1,49 @@
 import cv2
+import torch
 import numpy as np
 import os
+import supervision as sv
+from collections import Counter
 
-def create_edge_mask(image_path):
-    # Read the image
+from segment_anything import SamAutomaticMaskGenerator, sam_model_registry
+
+DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+
+
+def binarize_mask(image):
+    image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    pixels = image_rgb.reshape(-1, 3)
+    pixels_tuple = [tuple(pixel) for pixel in pixels]
+    color_counts = Counter(pixels_tuple)
+    most_common_color = color_counts.most_common(1)[0][0]
+
+    # Create masks
+    mask_most_common = np.all(image_rgb == most_common_color, axis=-1)
+    mask_other = ~mask_most_common
+
+    # Replace colors
+    image_rgb[mask_most_common] = [0, 0, 0]
+    image_rgb[mask_other] = [255, 255, 255]
+
+    # Convert the image back to BGR format
+    image_bgr = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2BGR)
+
+    return image_bgr
+
+def create_mask(image_path):
     image = cv2.imread(image_path)
-    if image is None:
-        print(f"Error: Unable to load image at {image_path}")
-        return None
+    image_black = np.zeros((1200, 1200, 3), dtype=np.uint8)
+
+    sam = sam_model_registry["vit_h"](checkpoint="./sam_ckpt/sam_vit_h_4b8939.pth").to(device=DEVICE)
+    mask_generator = SamAutomaticMaskGenerator(sam)
+    masks = mask_generator.generate(image)
+
+    mask_annotator = sv.MaskAnnotator(color_lookup=sv.ColorLookup.INDEX)
+    detections = sv.Detections.from_sam(sam_result=masks)
+    annotated_image = mask_annotator.annotate(scene = image_black.copy(), detections=detections)
     
-    # Convert the image to grayscale
-    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    
-    # Perform edge detection using Canny
-    edges = cv2.Canny(gray_image, threshold1=100, threshold2=200)
-    edges = cv2.GaussianBlur(edges, (21, 21), 0)
-    
-    # Create a mask based on the edges
-    mask = np.zeros_like(image)
-    
-    # Set the non-edge regions to red
-    mask[edges == 0] = [0, 0, 255]  # Red color in BGR format
-    # Set the edge regions to black
-    mask[edges != 0] = [0, 0, 0]
-    
+    mask = binarize_mask(annotated_image)
+
     return mask
 
 def process_dataset(input_folder, output_folder):
