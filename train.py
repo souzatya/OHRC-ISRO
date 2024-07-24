@@ -87,7 +87,7 @@ def train_model(model, train_loader, val_loader, num_epochs=1, learning_rate=1e-
         
         val_loss_dice /= len(val_loader)
         val_loss_iou /= len(val_loader)
-        print(f'Epoch [{epoch+1}/{num_epochs}], Training Loss (Dice): {train_loss_dice.item():.4f}, Training Loss (IoU): {train_loss_iou.item():.4f}, Validation Loss (Dice): {val_loss_dice:.4f}, Validation Loss (IoU): {val_loss_iou:.4f}')
+        print(f'Epoch [{epoch+1}/{num_epochs}], Training Loss (Dice): {train_loss_dice:.4f}, Training Loss (IoU): {train_loss_iou:.4f}, Validation Loss (Dice): {val_loss_dice:.4f}, Validation Loss (IoU): {val_loss_iou:.4f}')
         torch.save(model.state_dict(), os.path.join('weights', f'checkpoint_{epoch+1}.pt'))
         
     print('Training finished.')
