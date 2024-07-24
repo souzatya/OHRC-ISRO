@@ -162,7 +162,7 @@ class SingleConv(nn.Module):
 
 
 class ESAU(nn.Module):
-    def __init__(self,opt,in_channels=1,out_channels=1,n_channels=64,num_heads=[1,2,4,8],res=True):
+    def __init__(self,in_channels=3,out_channels=1,n_channels=64,num_heads=[1,2,4,8],res=True):
         super(ESAU,self).__init__()
         #ipdb.set_trace()
         self.in_channels = in_channels
