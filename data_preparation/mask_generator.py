@@ -47,6 +47,6 @@ def process_dataset(input_folder, output_folder):
                     print(f"Saved edge mask for {input_path} to {output_path}")
 
 # Example usage
-input_folder = 'images'
-output_folder = 'masks'
+input_folder = '../data_processed/images'
+output_folder = '../data_processed/masks'
 process_dataset(input_folder, output_folder)
